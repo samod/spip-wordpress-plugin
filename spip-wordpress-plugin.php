@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: SPIP to Wordpress Migration Plugin
-Plugin URI: http://samo.dekleva.net/project/wordpress/plugins/spip-wordpress-plugin/
-Description: A brief description of the Plugin.
+Plugin URI: http://samo.dekleva.net/projects/wordpress/plugins/spip-wordpress-plugin/
+Description: SPIP to Wordpress Migration Plugin migrates a SPIP site to Wordpress.
 Version: 0.1
 Author: Samo Dekleva
 Author URI: http://samo.dekleva.net/
@@ -32,6 +32,20 @@ if ( is_admin() ) {
     add_action( 'admin_init', 'spip_wordpress_plugin_admin_init' );
 } else {
   // non-admin enqueues, actions, and filters
+}
+
+function spip_wordpress_plugin_admin_menu() {
+	add_options_page(
+        __('SPIP Database Options','spip-wordpress-plugin').', '.__('SPIP to Wordpress Migration Plugin', 'spip-wordpress-plugin'), 
+        __('SPIP to Wordpress Migration Plugin', 'spip-wordpress-plugin'), 
+        'manage_options', 'spip-wordpress-plugin', 'spip_wordpress_plugin_options_page' );
+    add_submenu_page( 'tools.php', __('SPIP to Wordpress Migration Plugin'), __('Import from SPIP'), 'ímport', 'import-from-spip', 'import_from_spip');
+}
+
+function import_from_spip () {
+    echo '<div class="wrap">';
+    echo '<div id="icon-tools" class="icon32"><br /></div><h2>'.__('Import from SPIP').'</h2>';
+    echo '</div>';
 }
 
 function spip_wordpress_plugin_admin_init () {
@@ -72,13 +86,6 @@ function swp_spip_section_text () {
 
 function spip_wordpress_plugin_options_validate ($input) {
     return $input;
-}
-
-function spip_wordpress_plugin_admin_menu() {
-	add_options_page(
-        __('SPIP Database Options','spip-wordpress-plugin').', '.__('SPIP to Wordpress Migration Plugin', 'spip-wordpress-plugin'), 
-        __('SPIP to Wordpress Migration Plugin', 'spip-wordpress-plugin'), 
-        'manage_options', 'spip-wordpress-plugin', 'spip_wordpress_plugin_options_page' );
 }
 
 function spip_wordpress_plugin_options_page() {
